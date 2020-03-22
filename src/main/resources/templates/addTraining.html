@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body style="background-color: #2F3336; color: #efefef">
+<div style="text-align: center;	text-transform: uppercase;letter-spacing: 5px;background-color: #2F3336; color: #efefef;margin: 0;padding: 20px" class="logo">
+    <h1>Dziennik treningowy</h1>
+</div>
+<div style="background-color: #1c74b2; text-align: center;" class="top-nav">
+    <ul style="list-style-type: none; font-size: 20px; font-weight: bold;color: #efefef" class="menu">
+        <li style="text-decoration: none;display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;border-left: 1px dashed #0a2b42;"><a href="/all">Strona główna </a></li>
+        <li style="text-decoration: none;display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;"><a href="/new">Nowy trening</a></li>
+    </ul>
+</div>
+<section class="container">
+    <form action="#" th:action="@{/new}" th:object="${newTraining}" method="post">
+        <fieldset>
+            <legend>Dodaj trening</legend>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Data treningu: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{trainingDate}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2 col-lg-2"/>Plecy: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{plecy}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Klatka: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{klatka}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Triceps: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{triceps}">
+                </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Biceps: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{biceps}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Brzuch: </label>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{brzuch}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="submit" id="btnAdd" class="btn btn-primary" value="Dodaj"/>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</section>
+</body>
+
+</html>

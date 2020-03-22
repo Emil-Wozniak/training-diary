@@ -1,0 +1,12 @@
+body
+{
+    background-color: darkslategray;
+    width: 1000px;
+    text-align: center;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+#top{
+    background-color: darkslategray;
+}

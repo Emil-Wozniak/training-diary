@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../static/style.css" type="text/css" />
+
+    <style>
+        a:visited
+        {
+            text-decoration: none;
+            color: #efefef;
+        }
+    </style>
+</head>
+<body style="background-color: #2F3336; color: #efefef">
+<div style="text-align: center;	text-transform: uppercase;letter-spacing: 5px;background-color: #2F3336; color: #efefef;margin: 0;padding: 20px" class="logo">
+    <h1>Dziennik treningowy</h1>
+</div>
+<div style="background-color: #1c74b2; text-align: center;" class="top-nav">
+    <ul style="list-style-type: none; font-size: 20px; font-weight: bold;color: #efefef;text-decoration: none;" class="menu">
+        <li style="display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;border-left: 1px dashed #0a2b42;"><a href="/all">Strona główna </a></li>
+        <li style="display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;"><a href="/new">Nowy trening</a></li>
+    </ul>
+</div>
+
+<div style="margin: 50px; " id="training">
+    <h1>Moje treningi</h1>
+
+    <div >
+    <ul style="width: 300px ;border: 3px solid #1c74b2; border-radius: 10px; display: inline-block" th:each="training : ${training}">
+        <li style="text-decoration: underline ;list-style-type: none ;font-weight: bold; font-size: 20px" th:text="${training.id} +' # ' + ${training.trainingDate}"></li>
+        <li th:text="${'Wiosłowanie: '+training.plecy}"></li>
+        <li th:text="${'Pompki: '+ training.getKlatka()}"></li>
+        <li th:text="${'Pompki francuskie: '+ training.triceps}"></li>
+        <li th:text="${'Biceps: '+ training.biceps}"></li>
+        <li th:text="${'Brzuszki: '+ training.brzuch}"></li>
+    </ul>
+    </div>
+</div>
+</body>
+
+</html>
