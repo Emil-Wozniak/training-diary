@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Title</title>
+    <title>Dodaj trening</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/shards.min.css">
 
     <link rel="stylesheet" href="../static/style.css">
 
+    <style>
+        a:visited
+        {
+            text-decoration: none;
+            color: #efefef;
+        }
+        body
+        {
+            background-color: #2F3336;
+            color: #efefef;
+        }
+    </style>
+
 </head>
-<body style="background-color: #2F3336; color: #efefef">
+<body>
 <div style="text-align: center;	text-transform: uppercase;letter-spacing: 5px;background-color: #2F3336; color: #efefef;margin: 0;padding: 20px" class="logo">
     <h1>Dziennik treningowy</h1>
 </div>
@@ -18,62 +35,46 @@
         <li style="text-decoration: none;display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;"><a href="/new">Nowy trening</a></li>
     </ul>
 </div>
-<section class="container">
-    <form action="#" th:action="@{/new}" th:object="${newTraining}" method="post">
-        <fieldset>
-            <legend>Dodaj trening</legend>
-
-            <div class="form-group">
-                <label class="control-label col-lg-2">Data treningu: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{trainingDate}">
+<div class="container my-5">
+    <h2 class="mb-5">Dodaj trening</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/new}" th:object="${newTraining}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="trainingDate" class="col-form-label">Data treningu</label>
+                        <input type="text" th:field="*{trainingDate}" class="form-control" id="trainingDate" placeholder="Data treningu">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="plecy" class="col-form-label">Plecy</label>
+                        <input type="text" th:field="*{plecy}" class="form-control" id="plecy" placeholder="Plecy">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="klatka" class="col-form-label">Klatka</label>
+                        <input type="text" th:field="*{klatka}" class="form-control" id="klatka" placeholder="Klatka">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="triceps" class="col-form-label">Triceps</label>
+                        <input type="text" th:field="*{triceps}" class="form-control" id="triceps" placeholder="Triceps">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="biceps" class="col-form-label">Biceps</label>
+                        <input type="text" th:field="*{biceps}" class="form-control" id="biceps" placeholder="Biceps">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="brzuch" class="col-form-label">Brzuch</label>
+                        <input type="text" th:field="*{brzuch}" class="form-control" id="brzuch" placeholder="Brzuch">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-2 col-lg-2"/>Plecy: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{plecy}" >
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="Dodaj trening">
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-lg-2">Klatka: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{klatka}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-lg-2">Triceps: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{triceps}">
-                </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-lg-2">Biceps: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{biceps}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-lg-2">Brzuch: </label>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{brzuch}">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" id="btnAdd" class="btn btn-primary" value="Dodaj"/>
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
-</section>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
