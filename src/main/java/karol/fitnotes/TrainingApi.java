@@ -25,21 +25,6 @@ public class TrainingApi {
         this.trainingManager = trainingManager;
          this.trainingRepo = trainingRepo;;
     }
-
-   /* @GetMapping("/all")
-    public Iterable<Training> getAll(){
-        return trainingManager.getAll();
-    }
-
-    @PostMapping("/")
-    public Training addTraining(@RequestBody Training training){
-        return trainingManager.addTraining(training);
-    }
-
-    @DeleteMapping("/delete")
-    public void deleteTraining (Long id){
-        trainingManager.deleteTraining(id);
-    }*/
 //////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/all")
@@ -72,18 +57,18 @@ public class TrainingApi {
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Training training = trainingRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("user", training);
-        return "update-user";
+        model.addAttribute("training", training);
+        return "update-training";
     }
 
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id,Training user, BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") long id,Training training, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
+            training.setId(id);
+            return "update-training";
         }
-        trainingRepo.save(user);
-        model.addAttribute("users", trainingRepo.findAll());
-        return "example";
+        trainingRepo.save(training);
+        model.addAttribute("training", trainingRepo.findAll());
+        return "index";
     }
 }
