@@ -13,22 +13,14 @@ import java.util.List;
 @ToString
 public class Training {
 
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
-    private String plecy;
-    private String klatka;
-    private String biceps;
-    private String triceps;
-    private String brzuch;
     private String trainingDate;
+    @OneToMany(mappedBy = "training")
+    private List<Exercise> exercises;
 
-    public Training(String trainingDate, String plecy, String klatka, String biceps,String triceps, String brzuch) {
+    public Training(String trainingDate) {
         this.trainingDate = trainingDate;
-        this.plecy=plecy;
-        this.klatka=klatka;
-        this.triceps=triceps;
-        this.biceps=biceps;
-        this.brzuch=brzuch;
     }
 }

@@ -21,6 +21,8 @@ public class Exercise {
     private double weight;
     private int rep;
     private int set;
+    @ManyToOne
+    private Training training;
 
 
 }

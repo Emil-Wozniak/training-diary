@@ -46,22 +46,19 @@
 
 <div style="margin: 50px; " id="training" >
     <h1>Moje treningi</h1>
-
-    <div style="width: 300px ; margin: 10px;border: 3px solid #1c74b2; border-radius: 10px; display: inline-block; padding: 10px" th:each="training : ${training}">
-        <ul>
-        <li style="text-decoration: underline ;list-style-type: none ;font-weight: bold; font-size: 20px" th:text="${training.id} +' # ' + ${training.trainingDate}"></li>
-        <li th:text="${'Wiosłowanie: '+training.plecy}"></li>
-        <li th:text="${'Pompki: '+ training.getKlatka()}"></li>
-        <li th:text="${'Pompki francuskie: '+ training.triceps}"></li>
-        <li th:text="${'Biceps: '+ training.biceps}"></li>
-        <li th:text="${'Brzuszki: '+ training.brzuch}"></li>
-            <br>
-            <div style="width: 260px ;float: left; margin-left: 50px; margin-bottom: ">
-            <a  th:href="@{/edit/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Edytuj</a>
-            <a th:href="@{/edit/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Usuń</a>
-            </div>
+    <div style="width: 300px ; margin: 10px;border: 3px solid #1c74b2; border-radius: 10px; display: inline-block; padding: 10px" th:each="training : ${training2}">
+        <h3 style="margin-top: 10px" th:text="${training.id+'# '+training.trainingDate}"></h3>
+    <div  >
+        <ul th:each="exercise : ${exercises}">
+        </li>
+         <li th:text="${exercise.name+': '+exercise.weight +'kg, '+exercise.set+' serie, '+exercise.rep +' powtórzeń'}"></li>
         </ul>
+        <a th:href="@{/edit/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Edytuj</a>
+        <a th:href="@{/delete/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Usuń</a>
+        <a th:href="@{/add-exercise/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Dodaj ćwiczenie</a>
+        </div>
     </div>
+</div>
 </div>
 </body>
 
