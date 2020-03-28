@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Edytuj trening</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Moje treningi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <link rel="stylesheet" href="../static/style.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link rel="stylesheet" href="../static/style.css" type="text/css" />
+
     <style>
         a:visited
         {
@@ -22,6 +26,7 @@
     </style>
 </head>
 <body>
+
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="/all" class="brand-logo">Dziennik treningowy</a>
 
@@ -40,23 +45,37 @@
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
-        <h1 class="header center orange-text" >Edit training</h1>
+        <h1 class="header center orange-text" th:text="${training.trainingDate}">My trainings</h1>
+        <a th:href="@{/add-exercise/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Add exercise</a>
+        <a th:href="@{/edit/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">edit</a>
+        <a th:href="@{/delete/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">delete</a>
         <div class="row center">
 
-            <form action="#" th:action="@{/update/{id}(id=${training.id})}" th:object="${training}" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Weight</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
 
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <label for="first_name">Data</label><br>
-                            <input th:field="*{trainingDate}"  id="first_name" type="text" class="validate">
-                        </div>
+                <tbody>
+                <tr th:each="exercise : ${training.getExercises()}">
+                    <td th:text="${exercise.name}">Alvin</td>
+                    <td th:text="${exercise.weight}">Alvin</td>
+                    <td th:text="${exercise.set}">Alvin</td>
+                    <td th:text="${exercise.rep}">Alvin</td>
+                    <td ><a th:href="@{/edit-exercise/{id}(id=${exercise.id})}" class="waves-effect waves-light btn-small">Edit</a></td>
+                    <td ><a th:href="@{/delete-exercise/{id}(id=${exercise.id})}" class="waves-effect waves-light btn-small">Delete</a></td>
 
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <input type="submit" class="btn btn-primary" value="Edit training">
-                    </div>
-                </div>
-            </form>
+                </tr>
+                </tbody>
+            </table>
+            <a href="/all" class="waves-effect waves-light btn-small">return</a>
 
     </div>
 </div>
@@ -99,5 +118,14 @@
         </div>
     </div>
 </footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+
 </body>
+
 </html>

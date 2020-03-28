@@ -8,6 +8,7 @@ import karol.fitnotes.service.TrainingManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,14 +25,16 @@ public class ExerciseController {
         this.exerciseRepo = exerciseRepo;
     }
 
+    ///////////////////GET ALL/////////////////////
     @GetMapping("/all")
     public String getAllExercises(Model model){
-        Training training1 = null;
+
         model.addAttribute("exercises", exerciseRepo.findAll());
         model.addAttribute("training2", trainingRepo.findAll());
         return "index";
     }
 
+    //////////////////GET BY ID///////////////////////////
     @GetMapping("/id")
     public String getExercisesByID (@RequestParam("id") Long id, Model model){
         model.addAttribute("exercises", exerciseRepo.findById(id));
@@ -42,13 +45,13 @@ public class ExerciseController {
     public String showAddExerciseForm(@PathVariable("id") long id, Model model) {
         Exercise newExercise = new Exercise();
         Training training = trainingRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("Exercise", newExercise);
+        model.addAttribute("exercise", newExercise);
         model.addAttribute("trainingId", training);
         return "addExercise";
     }
 
     @PostMapping("/add-exercise/{id}")
-    public String saveEx(@PathVariable("id") long id,@ModelAttribute("Exercise") Exercise exercise){
+    public String saveExercise(@PathVariable("id") long id,@ModelAttribute("Exercise") Exercise exercise){
         Training t1 = trainingRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         exercise.setTraining(t1);
@@ -57,4 +60,31 @@ public class ExerciseController {
         return "redirect:/all";
     }
 
+    /////////////DELETE/////////////////////
+    @GetMapping("/delete-exercise/{id}")
+    public String deleteExercise(@PathVariable("id") long id){
+
+        exerciseRepo.deleteById(id);
+
+        return "redirect:/all";
+    }
+
+    ///////////edit/
+    @GetMapping("/edit-exercise/{id}")
+    public String showExerciseUpdateForm(@PathVariable("id") long id, Model model) {
+        Exercise exercise = exerciseRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        model.addAttribute("exercises", exercise);
+        return "update-exercise";
+    }
+
+    @PostMapping("/update-exercise/{id}")
+    public String updateExercise(@PathVariable("id") long id, Exercise exercise, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            exercise.setId(id);
+            return "update-exercise";
+        }
+        exerciseRepo.save(exercise);
+        model.addAttribute("exercises", exerciseRepo.findAll());
+        return "redirect:/all";
+    }
 }

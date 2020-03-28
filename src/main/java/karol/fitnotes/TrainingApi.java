@@ -11,6 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
 
 
 @Controller
@@ -30,14 +34,14 @@ public class TrainingApi {
 
     @GetMapping("/allTraining")
     public String getAll(Model model){
-        model.addAttribute("training", trainingManager.getAll());
+        model.addAttribute("trainings", trainingRepo.findAll());
         return "index";
     }
 
     @GetMapping("/idTraining")
     public String getByID (@RequestParam("idTraining") Long id, Model model){
         model.addAttribute("training", trainingManager.getById(id));
-        return "index";
+        return "training";
     }
 
     /////////////ADD TRAINING/////////////////////////////////////
@@ -50,6 +54,11 @@ public class TrainingApi {
 
     @PostMapping("/new")
     public String save(@ModelAttribute("newTraining") Training training){
+        if (training.getTrainingDate().isEmpty()){
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+            String dateTime = LocalDateTime.now().format(dateTimeFormatter);
+            training.setTrainingDate(dateTime);
+        }
         trainingManager.addTraining(training);
         return "redirect:/all";
     }
@@ -63,7 +72,7 @@ public class TrainingApi {
     }
 
     @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id,Training training, BindingResult result, Model model) {
+    public String updateTraining(@PathVariable("id") long id,Training training, BindingResult result, Model model) {
         if (result.hasErrors()) {
             training.setId(id);
             return "update-training";
@@ -75,11 +84,19 @@ public class TrainingApi {
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model) {
-        Training user = trainingRepo.findById(id)
+        Training training = trainingRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        trainingRepo.delete(user);
+        if (training.getExercises().isEmpty()){
+            trainingRepo.delete(training);
+            return "redirect:/all";
+        }else {
+            for (Exercise exercise: training.getExercises())
+             exerciseRepo.delete(exercise);
+            trainingRepo.delete(training);
+        }
+
         model.addAttribute("training", trainingRepo.findAll());
-        return "index";
+        return "redirect:/all";
     }
     /////////////EDIT AND DELETE//////////////////////////////////
 

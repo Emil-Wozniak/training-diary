@@ -6,7 +6,9 @@
     <title>Moje treningi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/shards.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -21,44 +23,99 @@
             text-decoration: none;
             color: #efefef;
         }
-        a:link
-        {
-            text-decoration: none;
-            color: #efefef;
-        }
-        body
-        {
-            background-color: #2F3336;
-            color: #efefef;
-        }
     </style>
 </head>
 <body>
-<div style="text-align: center;	text-transform: uppercase;letter-spacing: 5px;background-color: #2F3336; color: #efefef;margin: 0;padding: 20px" class="logo">
-    <h1>Dziennik treningowy</h1>
-</div>
-<div style="background-color: #1c74b2; text-align: center;" class="top-nav">
-    <ul style="list-style-type: none; font-size: 20px; font-weight: bold;color: #efefef;text-decoration: none;" class="menu">
-        <li style="display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;border-left: 1px dashed #0a2b42;"><a href="/all">Strona główna </a></li>
-        <li style="display: inline-block; border-right: 1px dashed #0a2b42;padding: 15px;"><a href="/new">Nowy trening</a></li>
-    </ul>
-</div>
 
-<div style="margin: 50px; " id="training" >
-    <h1>Moje treningi</h1>
-    <div style="width: 300px ; margin: 10px;border: 3px solid #1c74b2; border-radius: 10px; display: inline-block; padding: 10px" th:each="training : ${training2}">
-        <h3 style="margin-top: 10px" th:text="${training.id+'# '+training.trainingDate}"></h3>
-    <div  >
-        <ul th:each="exercise : ${exercises}">
-        </li>
-         <li th:text="${exercise.name+': '+exercise.weight +'kg, '+exercise.set+' serie, '+exercise.rep +' powtórzeń'}"></li>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/all" class="brand-logo">Dziennik treningowy</a>
+
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/all">Main </a></li>
+            <li><a href="/new">New training </a></li>
         </ul>
-        <a th:href="@{/edit/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Edytuj</a>
-        <a th:href="@{/delete/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Usuń</a>
-        <a th:href="@{/add-exercise/{id}(id=${training.id})}" class="waves-effect waves-light btn-small">Dodaj ćwiczenie</a>
+
+        <ul id="nav-mobile" class="sidenav">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">Moje treningi</h1>
+        <form class="row center">
+
+            <div class="row" th:each="training : ${training2}">
+                <div class="col s12 m6">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title" th:text="${training.trainingDate}">Card Title</span>
+                            <ul th:each="exercise : ${training.getExercises()}">
+                                <li th:text="${exercise.name}"></li>
+                            </ul>
+                        </div>
+                        <div class="card-action">
+                            <a th:href="@{/idTraining(idTraining=${training.id})}" class="btn btn-danger">
+                                <span class="glyphicon-info-sign glyphicon" /></span> Details</a>
+                            <a th:href="@{/add-exercise/{id}(id=${training.id})}" class="btn btn-danger">
+                                <span class="glyphicon-info-sign glyphicon" /></span> Add training</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
         </div>
     </div>
-</div>
+
+
+
+
+
+<footer class="page-footer orange">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Company Bio</h5>
+                <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Settings</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li><a class="white-text" href="#!">Link 1</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
 </div>
 </body>
 
