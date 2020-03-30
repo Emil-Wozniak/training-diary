@@ -1,4 +1,4 @@
-package karol.fitnotes;
+package karol.fitnotes.controller;
 
 import karol.fitnotes.domain.Exercise;
 import karol.fitnotes.domain.Training;

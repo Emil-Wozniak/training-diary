@@ -1359,7 +1359,7 @@ select exercise0_.id as id1_0_, exercise0_.abs as abs2_0_, exercise0_.back as ba
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
 	at com.sun.proxy.$Proxy86.findAll(Unknown Source)
 	at karol.fitnotes.service.ExerciseService.getAll(ExerciseService.java:21)
-	at karol.fitnotes.TrainingApi.getAll(TrainingApi.java:44)
+	at karol.fitnotes.controller.TrainingApi.getAll(TrainingApi.java:44)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
