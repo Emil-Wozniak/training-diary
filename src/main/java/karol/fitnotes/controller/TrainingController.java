@@ -18,14 +18,14 @@ import java.util.List;
 
 
 @Controller
-public class TrainingApi {
+public class TrainingController {
 
     private TrainingManager trainingManager;
     private TrainingRepo trainingRepo;
     private ExerciseRepo exerciseRepo;
 
     @Autowired
-    public TrainingApi(TrainingManager trainingManager, TrainingRepo trainingRepo, ExerciseRepo exerciseRepo) {
+    public TrainingController(TrainingManager trainingManager, TrainingRepo trainingRepo, ExerciseRepo exerciseRepo) {
         this.trainingManager = trainingManager;
          this.trainingRepo = trainingRepo;
          this.exerciseRepo = exerciseRepo;
