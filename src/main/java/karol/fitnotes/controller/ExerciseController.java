@@ -4,6 +4,7 @@ import karol.fitnotes.domain.Exercise;
 import karol.fitnotes.domain.Training;
 import karol.fitnotes.repository.ExerciseRepo;
 import karol.fitnotes.repository.TrainingRepo;
+import karol.fitnotes.service.ExerciseService;
 import karol.fitnotes.service.TrainingManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ExerciseController {
 
-    private TrainingManager trainingManager;
+    private ExerciseService exerciseService;
     private TrainingRepo trainingRepo;
     private ExerciseRepo exerciseRepo;
 
     @Autowired
-    public ExerciseController(TrainingManager trainingManager, TrainingRepo trainingRepo, ExerciseRepo exerciseRepo) {
-        this.trainingManager = trainingManager;
+    public ExerciseController(ExerciseService exerciseService, TrainingRepo trainingRepo, ExerciseRepo exerciseRepo) {
+        this.exerciseService = exerciseService;
         this.trainingRepo = trainingRepo;
         this.exerciseRepo = exerciseRepo;
     }
@@ -51,13 +52,13 @@ public class ExerciseController {
     }
 
     @PostMapping("/add-exercise/{id}")
-    public String saveExercise(@PathVariable("id") long id,@ModelAttribute("Exercise") Exercise exercise){
+    public String saveExercise(@PathVariable("id") long id, @ModelAttribute("Exercise") Exercise exercise){
         Training t1 = trainingRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         exercise.setTraining(t1);
         exerciseRepo.save(exercise);
 
-        return "redirect:/all";
+        return "redirect:/";
     }
 
     /////////////DELETE/////////////////////
@@ -66,7 +67,7 @@ public class ExerciseController {
 
         exerciseRepo.deleteById(id);
 
-        return "redirect:/all";
+        return "redirect:/";
     }
 
     ///////////edit/
@@ -83,8 +84,13 @@ public class ExerciseController {
             exercise.setId(id);
             return "update-exercise";
         }
-        exerciseRepo.save(exercise);
+        Exercise updateExercise = exerciseService.getById(id);
+        updateExercise.setName(exercise.getName());
+        updateExercise.setSet(exercise.getSet());
+        updateExercise.setRep(exercise.getRep());
+        updateExercise.setWeight(exercise.getWeight());
+        exerciseRepo.save(updateExercise);
         model.addAttribute("exercises", exerciseRepo.findAll());
-        return "redirect:/all";
+        return "redirect:/";
     }
 }

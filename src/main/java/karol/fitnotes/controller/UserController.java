@@ -6,6 +6,8 @@ import karol.fitnotes.repository.AppUserRepo;
 import karol.fitnotes.repository.TokenRepo;
 import karol.fitnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-
 @Controller
 public class UserController {
     private TokenRepo tokenRepo;
@@ -27,12 +28,10 @@ public class UserController {
         this.appUserRepo = appUserRepo;
     }
 
-    ////Do usunięcia
-    @GetMapping("/hello")
-    public String sayHello(Model model, Principal principal){
-
-        model.addAttribute("hello", principal.getName());
-        return "hello";
+    @GetMapping("/")
+    public String allTrainings(Model model, Principal principal){
+        model.addAttribute("appUsers", appUserRepo.findByUsername(principal.getName()));
+        return "index";
     }
 
     @GetMapping("/singup")
@@ -55,7 +54,7 @@ public class UserController {
         AppUser appUser = byValue.getAppUser();
         appUser.setEnable(true);
         appUserRepo.save(appUser);
-        return "hello";
+        return "index";
     }
 
 }

@@ -19,6 +19,8 @@ public class Training {
     private String trainingDate;
     @OneToMany(mappedBy = "training")
     private List<Exercise> exercises;
+    @ManyToOne
+    private AppUser appUser;
 
     public Training(String trainingDate) {
         this.trainingDate = trainingDate;
