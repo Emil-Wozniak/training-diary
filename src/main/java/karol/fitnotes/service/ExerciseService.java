@@ -22,14 +22,34 @@ public class ExerciseService {
         return exerciseRepo.findAll();
     }
 
-    public Exercise getById(Long index){
-        Exercise exerciseById=null;
-        for (Exercise exercise:exerciseRepo.findAll()){
-            if (exercise.getId().equals(index)){
-                exerciseById = exercise;
-                break;
-            }
+    public Exercise getById(Long id){
+        return exerciseRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+    }
+
+    public void deleteExercise (Exercise exercise) {
+        exerciseRepo.delete(exercise);
+    }
+
+    public void addExercise (Exercise exercise){
+        exerciseRepo.save(exercise);
+    }
+
+    public void deleteExerciseById (Long id){
+        if (exerciseRepo.existsById(id)){
+            exerciseRepo.deleteById(id);
         }
-        return exerciseById;
+    }
+
+    public Exercise updateExercise (Long id, Exercise exercise){
+        Exercise updateExercise = exerciseRepo.findById(id)
+                .map(element -> {
+                    element.setName(exercise.getName());
+                    element.setSet(exercise.getSet());
+                    element.setRep(exercise.getRep());
+                    element.setWeight(exercise.getWeight());
+                    return exerciseRepo.save(element);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        return updateExercise;
     }
 }

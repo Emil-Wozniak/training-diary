@@ -2,8 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Moje treningi</title>
+    <title>Zaloguj się</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -15,25 +14,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
-
 <nav th:replace="fragments/header :: header"></nav>
-<div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-        <br><br>
-        <h1 class="header center orange-text">Registration form</h1>
-        <div class="row center">
-
-            <h1></h1>
-            <form  th:action="@{/registration}" method="post">
-                <input name="username" type="text" placeholder="Username">
-                <input name="password" type="text" placeholder="Password">
-                <input type="submit" value="Registration">
-            </form>
-
+<div class="container">
+<section class="login-page">
+    <h2 class="header center orange-text">Login page</h2>
+    <div class="col s10">
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username"/>
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password"/>
+        </div>
 
+        <div class="form-group form-group--buttons">
+            <button class="btn" type="submit">Login</button>
+        </div>
+    </form>
+    </div>
+</section>
+</div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

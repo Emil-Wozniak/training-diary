@@ -10,17 +10,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <link rel="stylesheet" href="../static/style.css">
-    <style>
-        a:visited {
-            text-decoration: none;
-            color: #efefef;
-        }
-    </style>
 </head>
 <body>
 <nav th:replace="fragments/header :: header"></nav>
@@ -30,9 +22,9 @@
         <h1 class="header center orange-text">Edit training</h1>
         <div class="row center">
 
-            <form action="#" th:action="@{/update/{id}(id=${training.id})}" th:object="${training}" method="post">
+            <form action="#" th:action="@{/trainings/update/{id}(id=${training.id})}" th:object="${training}" method="post">
 
-                <div class="row">
+                <div class="row center">
                     <div class="input-field col s6">
                         <label for="first_name">Data</label><br>
                         <input th:field="*{trainingDate}" id="first_name" type="text" class="validate">

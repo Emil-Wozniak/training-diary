@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,5 +46,13 @@ public class UserService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    public AppUser findByUsername (String username){
+        return appUserRepo.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Invalid username:" + username));
+    }
+
+    public AppUser getById (Long id){
+        return appUserRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
     }
 }
