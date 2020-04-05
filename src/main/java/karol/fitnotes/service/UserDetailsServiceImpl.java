@@ -20,6 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // todo throw if username not exist
-        return appUserRepo.findByUsername(username).get();
+        return appUserRepo.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Invalid username:" + username));
     }
 }

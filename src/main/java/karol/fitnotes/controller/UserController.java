@@ -2,6 +2,7 @@ package karol.fitnotes.controller;
 
 import karol.fitnotes.domain.AppUser;
 import karol.fitnotes.domain.Token;
+import karol.fitnotes.repository.AppUserRepo;
 import karol.fitnotes.repository.TokenRepo;
 import karol.fitnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,18 @@ import java.security.Principal;
 public class UserController {
     private TokenRepo tokenRepo;
     private UserService userService;
+    private AppUserRepo appUserRepo;
 
     @Autowired
-    public UserController(TokenRepo tokenRepo, UserService userService) {
+    public UserController(TokenRepo tokenRepo, UserService userService, AppUserRepo appUserRepo) {
         this.tokenRepo = tokenRepo;
         this.userService = userService;
+        this.appUserRepo = appUserRepo;
     }
 
     @GetMapping("/trainings")
     public String allTrainings(Model model, Principal principal){
-        model.addAttribute("appUsers", userService.findByUsername(principal.getName()));
+        model.addAttribute("appUsers", appUserRepo.findByUsername(principal.getName()).get());
         return "index";
     }
 
@@ -48,8 +51,8 @@ public class UserController {
         Token byValue = tokenRepo.findByValue(value);
         AppUser appUser = byValue.getAppUser();
         appUser.setEnable(true);
-        userService.addUser(appUser);
-        return "index";
+        appUserRepo.save(appUser);
+        return "redirect:/trainings";
     }
 
 }

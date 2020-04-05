@@ -39,9 +39,6 @@ public class TrainingController {
         this.userService = userService;
     }
 
-
-//////////////////////////////////////////////////////////////////////////////////
-
     @GetMapping("/idTraining")
     public String getByID(@RequestParam("idTraining") Long id, Model model) {
         model.addAttribute("training", trainingManager.getById(id));
@@ -66,7 +63,7 @@ public class TrainingController {
         AppUser user = userService.getById(id);
         training.setAppUser(user);
         trainingManager.addTraining(training);
-        return "redirect:/";
+        return "redirect:/trainings";
     }
 
     /////////////ADD TRAINING/////////////////////////////////////
@@ -92,7 +89,7 @@ public class TrainingController {
     @GetMapping("/delete/{id}")
     public String deleteTraining(@PathVariable("id") Long id) {
         trainingManager.deleteTrainingById(id);
-        return "redirect:/";
+        return "redirect:/trainings";
     }
     /////////////EDIT AND DELETE//////////////////////////////////
 

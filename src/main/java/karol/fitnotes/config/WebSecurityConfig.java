@@ -35,11 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().disable();
         http.authorizeRequests()
-                .antMatchers( "/trainings").hasRole("USER")
-                .antMatchers("/trainings/new").hasRole("USER")
+                .antMatchers( "/trainings/**").hasRole("USER")
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
                 .defaultSuccessUrl("/trainings");
 
     }

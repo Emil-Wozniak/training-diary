@@ -33,20 +33,6 @@ public class TrainingManager {
         return trainingRepo.save(training);
     }
 
-    /*public void deleteTraining(Training training){
-        trainingRepo.delete(training);
-
-        Training deleteToTraining = trainingRepo.findById(index).get();
-        if (deleteToTraining.getExercises().isEmpty()) {
-            trainingRepo.delete(deleteToTraining);
-        } else {
-            for (Exercise exercise : deleteToTraining.getExercises()){
-                exerciseRepo.delete(exercise);
-                trainingRepo.delete(deleteToTraining);
-            }
-        }
-    }*/
-
     public void deleteTrainingById(Long id) {
         Training trainingToDelete = trainingRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         if (!trainingToDelete.getExercises().isEmpty()) {
