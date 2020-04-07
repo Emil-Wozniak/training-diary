@@ -18,6 +18,8 @@ public class Training {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
+
+    @Size(min = 0, max = 20)
     private String trainingDate;
     @OneToMany(mappedBy = "training")
     private List<Exercise> exercises;

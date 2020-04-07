@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
@@ -21,20 +21,28 @@
     <div class="container">
         <br><br>
         <h1 class="header center orange-text">Add training</h1>
+        <div class="row center col s12">
+            <h6><i>If you don't fill in the field, the current date will be entered</i></h6>
+        </div>
         <div class="row center">
 
             <form action="#" th:action="@{/trainings/new/{id}(id=${userId})}" th:object="${newTraining}" method="post">
+
                 <div class="row center">
-                    <div class="input-field col s6">
-                        <label for="date">Data</label><br>
-                        <input th:field="*{trainingDate}" id="date" type="text" class="validate">
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="date">Data</label><br>
+                            <input th:field="*{trainingDate}" id="date" type="text">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('trainingDate')}"
+                               th:errors="*{trainingDate}"></p>
+                        </div>
                     </div>
-                </div>
 
-
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <input type="submit" class="btn btn-primary" value="add training">
+                    <div class="row">
+                        <div class="col-md-6 mt-5">
+                            <input type="submit" class="btn btn-primary" value="add training">
+                        </div>
                     </div>
                 </div>
             </form>

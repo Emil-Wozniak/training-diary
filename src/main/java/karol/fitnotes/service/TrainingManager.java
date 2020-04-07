@@ -23,7 +23,6 @@ public class TrainingManager {
         this.trainingRepo = trainingRepo;
     }
 
-
     public Iterable<Training> getAll() {
 
         return trainingRepo.findAll();

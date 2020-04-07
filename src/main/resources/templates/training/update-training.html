@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
@@ -22,24 +22,14 @@
         <h1 class="header center orange-text">Edit training</h1>
         <div class="row center">
 
-            <form action="#" th:action="@{/trainings/update-exercise/{id}(id=${exercises.id})}" th:object="${exercises}"
-                  method="post">
+            <form action="#" th:action="@{/trainings/update/{id}(id=${training.id})}" th:object="${training}" method="post">
 
-                <div class="form-group col-md-6">
-                    <label for="name" class="col-form-label">Nazwa</label>
-                    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Nazwa">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="rep" class="col-form-label">Powtórzenia</label>
-                    <input type="text" th:field="*{rep}" class="form-control" id="rep" placeholder="Powtórzenia">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="set" class="col-form-label">Serie</label>
-                    <input type="text" th:field="*{set}" class="form-control" id="set" placeholder="Serie">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="weight" class="col-form-label">Ciężar</label>
-                    <input type="text" th:field="*{weight}" class="form-control" id="weight" placeholder="Ciężar">
+                <div class="row center">
+                    <div class="input-field col s6">
+                        <label for="first_name">Data</label><br>
+                        <input th:field="*{trainingDate}" id="first_name" type="text" class="validate">
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('trainingDate')}" th:errors="*{trainingDate}" ></p>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -53,6 +43,6 @@
 </div>
 
 
-<footer th:replace="fragments/footer :: footer"></footer>
+<footer th:replace="fragments/footer :: footer">
 </body>
 </html>

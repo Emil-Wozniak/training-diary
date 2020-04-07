@@ -2,13 +2,15 @@ package karol.fitnotes.service;
 
 import karol.fitnotes.domain.AppUser;
 import karol.fitnotes.domain.Token;
+import karol.fitnotes.domain.Training;
 import karol.fitnotes.repository.AppUserRepo;
 import karol.fitnotes.repository.TokenRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import java.util.Optional;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -40,7 +42,7 @@ public class UserService {
         token.setAppUser(appUser);
         tokenRepo.save(token);
 
-        String url = "http://localhost:8080/token?value="+tokenValue;
+        String url = "https://training-notes.herokuapp.com/token?value=" + tokenValue;
         try {
             mailService.sendMail(appUser.getUsername(), "Potwierdz", url, false);
         } catch (MessagingException e) {
@@ -48,11 +50,27 @@ public class UserService {
         }
     }
 
-    public AppUser findByUsername (String username){
+    public AppUser findByUsername(String username) {
         return appUserRepo.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("Invalid username:" + username));
     }
 
-    public AppUser getById (Long id){
+    public AppUser getById(Long id) {
         return appUserRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+    }
+
+    public List<Training> getAllTrainings(String username) {
+        List<Training> trainings = appUserRepo.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid username:" + username))
+                .getTrainings();
+
+        trainings.sort(Comparator.comparing(Training::getId).reversed());
+        return trainings;
+    }
+
+    public void confirmToken(String value) {
+        Token byValue = tokenRepo.findByValue(value);
+        AppUser appUser = byValue.getAppUser();
+        appUser.setEnable(true);
+        appUserRepo.save(appUser);
     }
 }

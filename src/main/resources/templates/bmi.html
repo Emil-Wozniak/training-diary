@@ -24,6 +24,7 @@
         <form class="row center" th:object="${newBmi}" th:action="@{/bmi}" method="post">
                 <label for="weight">Weight</label>
                 <input type="text" id="weight" th:field="*{weight}">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}" ></p>
                 <label for="height">Height</label>
                 <input type="text" id="height" th:field="*{height}">
                 <input type="submit" class="btn btn-primary" value="Calculate">

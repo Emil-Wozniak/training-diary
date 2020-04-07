@@ -1,34 +1,34 @@
 package karol.fitnotes.controller;
 
 import karol.fitnotes.domain.AppUser;
-import karol.fitnotes.domain.Token;
 import karol.fitnotes.repository.AppUserRepo;
 import karol.fitnotes.repository.TokenRepo;
 import karol.fitnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.security.Principal;
+
 @Controller
 public class UserController {
-    private TokenRepo tokenRepo;
+
     private UserService userService;
-    private AppUserRepo appUserRepo;
 
     @Autowired
-    public UserController(TokenRepo tokenRepo, UserService userService, AppUserRepo appUserRepo) {
-        this.tokenRepo = tokenRepo;
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.appUserRepo = appUserRepo;
     }
 
     @GetMapping("/trainings")
     public String allTrainings(Model model, Principal principal){
-        model.addAttribute("appUsers", appUserRepo.findByUsername(principal.getName()).get());
+        model.addAttribute("appUsers", userService.getAllTrainings(principal.getName()));
         return "index";
     }
 
@@ -39,8 +39,10 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String saveUser(AppUser appUser){
-
+    public String saveUser(@Valid @ModelAttribute("newUser") AppUser appUser, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "registration";
+        }
         userService.addUser(appUser);
 
         return "registration";
@@ -48,10 +50,7 @@ public class UserController {
 
     @GetMapping("/token")
     public String confirmToken(@RequestParam String value){
-        Token byValue = tokenRepo.findByValue(value);
-        AppUser appUser = byValue.getAppUser();
-        appUser.setEnable(true);
-        appUserRepo.save(appUser);
+        userService.confirmToken(value);
         return "redirect:/trainings";
     }
 

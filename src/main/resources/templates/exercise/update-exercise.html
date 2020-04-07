@@ -1,55 +1,55 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Dodaj trening</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Edytuj trening</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
 <nav th:replace="fragments/header :: header"></nav>
-
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
-        <h1 class="header center orange-text">Add exercise</h1>
+        <h1 class="header center orange-text">Edit training</h1>
         <div class="row center">
 
-            <form action="#" th:action="@{/trainings/add-exercise/{id}(id=${trainingId.id})}" th:object="${exercise}"
+            <form action="#" th:action="@{/trainings/update-exercise/{id}(id=${exercises.id})}" th:object="${exercises}"
                   method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="name" class="col-form-label">Nazwa</label>
                         <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Nazwa">
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                     </div>
-
                     <div class="form-group col-md-6">
                         <label for="rep" class="col-form-label">Powtórzenia</label>
                         <input type="text" th:field="*{rep}" class="form-control" id="rep" placeholder="Powtórzenia">
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('rep')}" th:errors="*{rep}"></p>
                     </div>
-
                     <div class="form-group col-md-6">
                         <label for="set" class="col-form-label">Serie</label>
                         <input type="text" th:field="*{set}" class="form-control" id="set" placeholder="Serie">
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('set')}" th:errors="*{set}"></p>
                     </div>
-
                     <div class="form-group col-md-6">
                         <label for="weight" class="col-form-label">Ciężar</label>
                         <input type="text" th:field="*{weight}" class="form-control" id="weight" placeholder="Ciężar">
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mt-5">
-                        <input type="submit" class="btn btn-primary" value="Add exercise">
+                        <input type="submit" class="btn btn-primary" value="Edit training">
                     </div>
                 </div>
             </form>
@@ -59,8 +59,5 @@
 
 
 <footer th:replace="fragments/footer :: footer"></footer>
-
-
 </body>
-
 </html>

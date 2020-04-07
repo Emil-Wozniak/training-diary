@@ -24,10 +24,13 @@
         <div class="row center">
 
             <h1></h1>
-            <form  th:action="@{/registration}" method="post">
-                <input name="username" type="text" placeholder="Username">
-                <input name="password" type="text" placeholder="Password">
-                <input type="submit" value="Registration">
+            <form  th:action="@{/registration}" th:object="${newUser}" method="post">
+                <input name="username" type="text" placeholder="E-mail">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></p>
+                <input name="password" type="password" placeholder="Password">
+                <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></p>
+
+                <input type="submit" value="Registration" class="waves-effect waves-light btn-small">
             </form>
 
         </div>
