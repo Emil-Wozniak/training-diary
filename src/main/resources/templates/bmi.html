@@ -2,7 +2,7 @@
 <html lang="pl"  xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Moje treningi</title>
+    <title>BMI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -29,7 +29,7 @@
                 <input type="text" id="height" th:field="*{height}">
                 <input type="submit" class="btn btn-primary" value="Calculate">
 
-            <h1 th:text="${'Your BMI: '+all}" th:if="${all!=null}"></h1><br><br>
+            <h1 th:text="${'Your BMI: '+result}" th:if="${result!=null}"></h1><br><br>
         </form>
     </div>
 </div>

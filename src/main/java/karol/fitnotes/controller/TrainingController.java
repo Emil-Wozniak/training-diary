@@ -2,7 +2,6 @@ package karol.fitnotes.controller;
 
 import karol.fitnotes.domain.AppUser;
 import karol.fitnotes.domain.Training;
-import karol.fitnotes.service.ExerciseService;
 import karol.fitnotes.service.TrainingManager;
 import karol.fitnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +30,22 @@ public class TrainingController {
     @GetMapping("/idTraining")
     public String getByID(@RequestParam("idTraining") Long id, Model model) {
         model.addAttribute("training", trainingManager.getById(id));
-        return "/training/training";
+        return "/training";
     }
 
     /////////////ADD TRAINING/////////////////////////////////////
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @GetMapping("/new")
     public String getAddNewTrainingForm( Model model, Principal principal) {
         AppUser user = userService.findByUsername(principal.getName());
         model.addAttribute("newTraining", new Training());
         model.addAttribute("userId", user.getId());
-        return "/training/addTraining";
+        return "/addTraining";
     }
 
     @PostMapping("/new/{id}")
-    public String save(@PathVariable("id") long id,@Valid @ModelAttribute("newTraining") Training training,BindingResult bindingResult) {
+    public String saveTraining(@PathVariable("id") long id,@Valid @ModelAttribute("newTraining") Training training,BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            return "/training/addTraining";
+            return "/addTraining";
         }
         trainingManager.setCurrentDateIfFieldIsEmpty(training);
         AppUser user = userService.getById(id);
@@ -54,25 +53,22 @@ public class TrainingController {
         trainingManager.addTraining(training);
         return "redirect:/trainings";
     }
-
-    /////////////ADD TRAINING/////////////////////////////////////
     /////////////EDIT AND DELETE//////////////////////////////////
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Training training = trainingManager.getById(id);
-        model.addAttribute("training", training);
-        return "/training/update-training";
+        model.addAttribute("training", trainingManager.getById(id));
+        return "/update-training";
     }
 
     @PostMapping("/update/{id}")
     public String updateTraining(@PathVariable("id") long id, Training training, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             training.setId(id);
-            return "/training/update-training";
+            return "/update-training";
         }
         trainingManager.setCurrentDateIfFieldIsEmpty(training);
         trainingManager.updateTraining(id, training);
-        return "/training/training";
+        return "/training";
     }
 
     @GetMapping("/delete/{id}")
@@ -80,6 +76,5 @@ public class TrainingController {
         trainingManager.deleteTrainingById(id);
         return "redirect:/trainings";
     }
-    /////////////EDIT AND DELETE//////////////////////////////////
 
 }

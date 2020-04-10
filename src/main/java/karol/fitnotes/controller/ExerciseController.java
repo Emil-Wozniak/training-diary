@@ -1,7 +1,6 @@
 package karol.fitnotes.controller;
 
 import karol.fitnotes.domain.Exercise;
-import karol.fitnotes.domain.Training;
 import karol.fitnotes.service.ExerciseService;
 import karol.fitnotes.service.TrainingManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +25,21 @@ public class ExerciseController {
     }
 
     /////////////Add exercise//////////////////////////////////
-    @RequestMapping(value = "/add-exercise/{id}", method = RequestMethod.GET)
+    @GetMapping("/add-exercise/{id}")
     public String showAddExerciseForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("newExercise", new Exercise());
         model.addAttribute("trainingId", trainingManager.getById(id));
-        return "/exercise/addExercise";
+        return "/addExercise";
     }
 
     @PostMapping("/add-exercise/{id}")
     public String saveExercise(@PathVariable("id") long id,@Valid @ModelAttribute("newExercise") Exercise exercise, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
             model.addAttribute("trainingId", trainingManager.getById(id));
-            return "/exercise/addExercise";
+            return "/addExercise";
         }
 
-        Training trainingById = trainingManager.getById(id);
-        exercise.setTraining(trainingById);
+        exercise.setTraining(trainingManager.getById(id));
         exerciseService.addExercise(exercise);
         return "redirect:/trainings/idTraining?idTraining=" + id;
     }
@@ -53,17 +51,17 @@ public class ExerciseController {
         return "redirect:/trainings";
     }
 
-    ///////////edit/
+    ///////////edit/////////////////////
     @GetMapping("/edit-exercise/{id}")
     public String showExerciseUpdateForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("exercises", exerciseService.getById(id));
-        return "/exercise/update-exercise";
+        return "/update-exercise";
     }
 
     @PostMapping("/update-exercise/{id}")
-    public String updateExercise(@PathVariable("id") long id,@Valid @ModelAttribute("exercises") Exercise exercise,BindingResult bindingResult, Model model) {
+    public String updateExercise(@PathVariable("id") long id,@Valid @ModelAttribute("exercises") Exercise exercise,BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            return "/exercise/update-exercise";
+            return "/update-exercise";
         }
         exerciseService.updateExercise(id, exercise);
         return "redirect:/trainings";

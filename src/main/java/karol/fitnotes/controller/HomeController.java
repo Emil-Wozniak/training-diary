@@ -43,7 +43,7 @@ public class HomeController {
         }
         double bmiResult = bmiService.getBmi(bmi.getWeight(), bmi.getHeight());
 
-        model.addAttribute("all", bmiResult);
+        model.addAttribute("result", bmiResult);
         return "bmi";
     }
 }
