@@ -42,7 +42,7 @@ public class UserService {
         token.setAppUser(appUser);
         tokenRepo.save(token);
 
-        String url = "http://localhost:8080/token?value=" + tokenValue;
+        String url = "https://training-notes.herokuapp.com/token?value=" + tokenValue;
         try {
             mailService.sendMail(appUser.getUsername(), "Potwierdz", url, false);
         } catch (MessagingException e) {
