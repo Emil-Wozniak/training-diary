@@ -1,35 +1,37 @@
 package karol.fitnotes.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
-
+import org.springframework.stereotype.Indexed;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@NoArgsConstructor
+@Value
 @Getter
-@Setter
 @ToString
-@Entity
+@Indexed
+@Table(name = "exercise")
+@NoArgsConstructor(force = true)
 public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    Long id;
 
     @Size(min = 3, max = 20)
-    private String name;
+    String name;
+    
     @Range(max = 200)
-    private double weight;
+    double weight;
+    
     @Range(max = 100)
-    private int rep;
+    int rep; // TODO not self explanatory
+    
     @Range(max = 20)
-    private int set;
+    int set; // TODO not self explanatory
+    
+    @JsonIgnore // in the case of been persisted TODO assert fasterxml is in dependencies
     @ManyToOne
-    private Training training;
-
-
+    Training training;
 }
